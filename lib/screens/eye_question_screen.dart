@@ -112,6 +112,7 @@ class _EyeQuestionScreenState extends State<EyeQuestionScreen> {
                               numberFormat: NumberFormat('#'),
                             ),
                             displayFace(boxConstraints),
+                            displayNumber(boxConstraints),
                           ],
                         ),
                       ),
@@ -193,6 +194,7 @@ class _EyeQuestionScreenState extends State<EyeQuestionScreen> {
                               numberFormat: NumberFormat('#'),
                             ),
                             displayFace(boxConstraints),
+                            displayNumber(boxConstraints),
                           ],
                         ),
                       ),
@@ -274,6 +276,7 @@ class _EyeQuestionScreenState extends State<EyeQuestionScreen> {
                               numberFormat: NumberFormat('#'),
                             ),
                             displayFace(boxConstraints),
+                            displayNumber(boxConstraints),
                           ],
                         ),
                       ),
@@ -318,18 +321,53 @@ class _EyeQuestionScreenState extends State<EyeQuestionScreen> {
 
   Positioned displayFace(BoxConstraints boxConstraints) {
     return Positioned(
-      left: 12,
+      left: 18,
       bottom: 27,
       child: SizedBox(
-        width: boxConstraints.maxWidth * 0.9 - 30,
+        width: boxConstraints.maxWidth * 0.9 - 36,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: AppConstant.pathFaces
               .map((e) => WidgetImage(
                     path: e,
-                    size: 24,
+                    size: 18,
                   ))
               .toList(),
+        ),
+      ),
+    );
+  }
+
+  Positioned displayNumber(BoxConstraints boxConstraints) {
+    return Positioned(
+      left: 18,
+      bottom: 67,
+      child: SizedBox(
+        width: boxConstraints.maxWidth * 0.9 - 36,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+            gradient: LinearGradient(colors: [Colors.blue, Colors.green]),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          //color: Colors.grey,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: AppConstant.numbers
+                .map(
+                  (e) => Container(
+                    alignment: Alignment.center,
+                    width: 18,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Colors.white),
+                    child: Text(
+                      e.toString(),
+                    ),
+                  ),
+                )
+                .toList(),
+          ),
         ),
       ),
     );
