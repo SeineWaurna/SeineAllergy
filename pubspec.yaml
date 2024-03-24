@@ -69,6 +69,7 @@ dependencies:
   flutter_native_splash:
   flutter_localizations:
     sdk: flutter
+  getwidget: ^4.0.0
 
 flutter_launcher_icons:
   image_path: "assets/images/app_logo.jpg"
