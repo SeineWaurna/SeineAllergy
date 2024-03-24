@@ -6,6 +6,7 @@ import 'package:allergic_app/localization/locale_constant.dart';
 import 'package:allergic_app/screens/change_password_screen.dart';
 import 'package:allergic_app/screens/languate_screen.dart';
 import 'package:allergic_app/screens/profile_screen.dart';
+import 'package:allergic_app/utility/app_constant.dart';
 import 'package:allergic_app/views/login_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -413,10 +414,7 @@ Uri _url = Uri.parse("https://pdpa.pro/policies/view/th/zqs2VSemv9incYfAiVvszK4a
                           ),
                           Text(
                             Languages.of(context)!.privacyPolicy,
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: AppConstant().h2Style(fontSize: 16),
                           ),
                           const Spacer(),
                           const Icon(
