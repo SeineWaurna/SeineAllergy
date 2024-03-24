@@ -1,8 +1,12 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
+import 'package:allergic_app/utility/app_constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:getwidget/colors/gf_color.dart';
+import 'package:getwidget/components/button/gf_button.dart';
+import 'package:getwidget/getwidget.dart';
 import 'package:intl/intl.dart';
 
 import '../localization/language/languages.dart';
@@ -75,7 +79,8 @@ class _SelectDailyQuestionState extends State<SelectDailyQuestion> {
           _dailyQuestion4 +
           _dailyQuestion5 +
           _dailyQuestion6 +
-          _dailyQuestion7 + 30;
+          _dailyQuestion7 +
+          30;
     });
   }
 
@@ -107,114 +112,171 @@ class _SelectDailyQuestionState extends State<SelectDailyQuestion> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              InkWell(
-                onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const EyeQuestionScreen()))
-                    .then((value) {
-                  print("value $value");
-                  print(value["_dailyQuestion5"]);
-                  _dailyQuestion5 = value["_dailyQuestion5"];
-                  _dailyQuestion6 = value["_dailyQuestion6"];
-                  _dailyQuestion7 = value["_dailyQuestion7"];
-                  print(_dailyQuestion5);
-                }),
-                child: Container(
-                  padding: const EdgeInsets.all(8.0),
-                  height: MediaQuery.of(context).size.height * 0.18,
-                  width: MediaQuery.of(context).size.width * 0.37,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10.0),
-                    ),
-                  ),
-                  child: const CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: 48,
-                    backgroundImage: AssetImage("assets/images/1.png"),
+        backgroundColor: Colors.white,
+        body: LayoutBuilder(builder: (context, BoxConstraints boxConstraints) {
+          return Container(
+            alignment: Alignment.topLeft,
+            width: boxConstraints.maxWidth,
+            height: boxConstraints.maxHeight,
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Positioned(
+                  bottom: 0,
+                  child: Container(
+                    height: boxConstraints.maxHeight * 0.8,
+                    width: boxConstraints.maxWidth,
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage("assets/images/bg1.png"),
+                            fit: BoxFit.cover)),
                   ),
                 ),
-              ),
-              const SizedBox(height: 40),
-              InkWell(
-                onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const NoseQuestionScreen()))
-                    .then((value) {
-                  print("value $value");
-                  _dailyQuestion1 = value["_dailyQuestion1"];
-                  _dailyQuestion2 = value["_dailyQuestion2"];
-                  _dailyQuestion3 = value["_dailyQuestion3"];
-                  _dailyQuestion4 = value["_dailyQuestion4"];
-                }),
-                child: Container(
-                  padding: const EdgeInsets.all(8.0),
-                  height: MediaQuery.of(context).size.height * 0.18,
-                  width: MediaQuery.of(context).size.width * 0.37,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10.0),
-                    ),
-                  ),
-                  child: const CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: 48,
-                    backgroundImage: AssetImage("assets/images/2.png"),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 80,
-              ),
-              SizedBox(
-                width: 17.h,
-                height: 9.w,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white, backgroundColor: Colors.blueAccent, // foreground
-                  ),
-                  onPressed: () async {
-                    if (_dailyQuestion1 == 0 ||
-                        _dailyQuestion2 == 0 ||
-                        _dailyQuestion3 == 0 ||
-                        _dailyQuestion4 == 0 ||
-                        _dailyQuestion5 == 0 ||
-                        _dailyQuestion6 == 0 ||
-                        _dailyQuestion7 == 0) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                              Languages.of(context)!.notificationPleaseAnswer),
+                Positioned(
+                  top: 40,
+                  child: SizedBox(
+                    width: boxConstraints.maxWidth,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            eyeButton(context),
+                            noseButton(context),
+                            // saveButton(context),
+                          ],
                         ),
-                      );
-                    } else {
-                      final result = await _showDialog(context);
-                      if (result == OkCancelResult.ok) {
-                        _getScore();
-                        _insertData();
-                      }
-                    }
-                  },
-                  child: Text(
-                    Languages.of(context)!.btnSendDailyquestion,
-                    style: TextStyle(fontSize: 8.sp),
+                        const SizedBox(
+                          height: 32,
+                        ),
+                        saveButton(context),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ),
+              ],
+            ),
+          );
+        }),
         appBar: AppBar(
           title: Text(Languages.of(context)!.headerSelectScreen),
         ));
+  }
+
+  Widget saveButton(BuildContext context) {
+    return GFButton(
+      shape: GFButtonShape.pills,
+      color: GFColors.WARNING,
+      onPressed: () async {
+        if (_dailyQuestion1 == 0 ||
+            _dailyQuestion2 == 0 ||
+            _dailyQuestion3 == 0 ||
+            _dailyQuestion4 == 0 ||
+            _dailyQuestion5 == 0 ||
+            _dailyQuestion6 == 0 ||
+            _dailyQuestion7 == 0) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(Languages.of(context)!.notificationPleaseAnswer),
+            ),
+          );
+        } else {
+          final result = await _showDialog(context);
+          if (result == OkCancelResult.ok) {
+            _getScore();
+            _insertData();
+          }
+        }
+      },
+      child: Text(
+        Languages.of(context)!.btnSendDailyquestion,
+        style: TextStyle(fontSize: 16.sp),
+      ),
+    );
+  }
+
+  InkWell noseButton(BuildContext context) {
+    return InkWell(
+      onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const NoseQuestionScreen())).then((value) {
+        print("value $value");
+        _dailyQuestion1 = value["_dailyQuestion1"];
+        _dailyQuestion2 = value["_dailyQuestion2"];
+        _dailyQuestion3 = value["_dailyQuestion3"];
+        _dailyQuestion4 = value["_dailyQuestion4"];
+      }),
+      child: Container(
+        padding: const EdgeInsets.all(8.0),
+        // height: MediaQuery.of(context).size.height * 0.18,
+        width: MediaQuery.of(context).size.width * 0.45,
+        height: MediaQuery.of(context).size.width * 0.45,
+        decoration: BoxDecoration(
+          color: GFColors.WHITE,
+          border: Border.all(),
+          borderRadius: BorderRadius.all(
+            Radius.circular(10.0),
+          ),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const CircleAvatar(
+              backgroundColor: Colors.white,
+              radius: 48,
+              backgroundImage: AssetImage("assets/images/2.png"),
+            ),
+            Text('อาการทางจมูก', style: AppConstant().h2Style(),),
+          ],
+        ),
+      ),
+    );
+  }
+
+  InkWell eyeButton(BuildContext context) {
+    return InkWell(
+      onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const EyeQuestionScreen())).then((value) {
+        print("value $value");
+        print(value["_dailyQuestion5"]);
+        _dailyQuestion5 = value["_dailyQuestion5"];
+        _dailyQuestion6 = value["_dailyQuestion6"];
+        _dailyQuestion7 = value["_dailyQuestion7"];
+        print(_dailyQuestion5);
+      }),
+      child: Container(
+        padding: const EdgeInsets.all(8.0),
+        // height: MediaQuery.of(context).size.height * 0.18,
+        width: MediaQuery.of(context).size.width * 0.45,
+        height: MediaQuery.of(context).size.width * 0.45,
+        decoration: BoxDecoration(
+          color: GFColors.WHITE,
+          border: Border.all(),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(10.0),
+          ),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const CircleAvatar(
+              backgroundColor: Colors.white,
+              radius: 48,
+              backgroundImage: AssetImage("assets/images/1.png"),
+            ),
+            Text(
+              'อาการทางตา',
+              style: AppConstant()
+                  .h2Style(),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 

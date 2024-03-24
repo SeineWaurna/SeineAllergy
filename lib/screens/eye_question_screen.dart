@@ -40,8 +40,13 @@ class _EyeQuestionScreenState extends State<EyeQuestionScreen> {
                   height: 20,
                 ),
                 Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
                   width: boxConstraints.maxWidth,
-                  color: Colors.grey[200],
+
+
+                  decoration: AppConstant().gradientBox(),
+
+
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -60,25 +65,24 @@ class _EyeQuestionScreenState extends State<EyeQuestionScreen> {
                         ],
                       ),
                       LayoutBuilder(
-                        builder: (context, BoxConstraints boxConstraints) {
-                          return Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 20),
-                                child: SizedBox(
-                                  width: boxConstraints.maxWidth - 40,
-                                  child: Text(
-                                    Languages.of(context)!.dailyQuestion5_1,
-                                    style: TextStyle(
-                                      fontSize: 12.sp,
-                                    ),
+                          builder: (context, BoxConstraints boxConstraints) {
+                        return Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 20),
+                              child: SizedBox(
+                                width: boxConstraints.maxWidth - 40,
+                                child: Text(
+                                  Languages.of(context)!.dailyQuestion5_1,
+                                  style: TextStyle(
+                                    fontSize: 12.sp,
                                   ),
                                 ),
                               ),
-                            ],
-                          );
-                        }
-                      ),
+                            ),
+                          ],
+                        );
+                      }),
                       const SizedBox(
                         height: 10,
                       ),
@@ -133,8 +137,9 @@ class _EyeQuestionScreenState extends State<EyeQuestionScreen> {
                   height: 20,
                 ),
                 Container(
+                  margin: const EdgeInsets.only(left: 16, right: 16),
                   width: boxConstraints.maxWidth,
-                  color: Colors.grey[200],
+                  decoration: AppConstant().gradientBox(),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -226,8 +231,9 @@ class _EyeQuestionScreenState extends State<EyeQuestionScreen> {
                   height: 20,
                 ),
                 Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
                   width: boxConstraints.maxWidth,
-                  color: Colors.grey[200],
+                  decoration: AppConstant().linearBox(),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -250,7 +256,7 @@ class _EyeQuestionScreenState extends State<EyeQuestionScreen> {
                           Padding(
                             padding: const EdgeInsets.only(left: 20),
                             child: SizedBox(
-                              width: boxConstraints.maxWidth - 40,
+                              width: boxConstraints.maxWidth - 55,
                               child: Text(
                                 Languages.of(context)!.dailyQuestion7_1,
                                 style: TextStyle(
@@ -323,7 +329,8 @@ class _EyeQuestionScreenState extends State<EyeQuestionScreen> {
                     type: GFButtonType.outline2x,
                     shape: GFButtonShape.pills,
                     text: Languages.of(context)!.saveDailyquestion,
-                    textStyle: TextStyle(fontSize: 12.sp, color: GFColors.PRIMARY),
+                    textStyle:
+                        TextStyle(fontSize: 12.sp, color: GFColors.PRIMARY),
                     onPressed: () {
                       //List<double> eyeValue = [_dailyQuestion5, _dailyQuestion6, _dailyQuestion7];
                       Map<String, double> eyeValue = {
